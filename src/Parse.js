@@ -931,8 +931,24 @@ _html2canvas.Parse = function (images, options, cb) {
     body.removeChild(valueWrap);
   }
 
-  function drawImage (ctx) {
-    ctx.drawImage.apply(ctx, Array.prototype.slice.call(arguments, 1));
+  function drawImage(ctx, img, sx, sy, sw, sh, tx, ty, tw, th) {
+    if(img.src.endsWith('/imgplchldr')) {
+      // drawing an svg into the canvas 'taints' it and will throw a scurity exception when we try to read the result image later
+      // so we draw the x here instead of drawing the svg
+      ctx.beginPath();
+      ctx.lineWidth = "5";
+      ctx.strokeStyle = "black";
+      ctx.moveTo(tx, ty);
+      ctx.lineTo(tx + tw, ty + th);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(tx, ty + th);
+      ctx.lineTo(tx + tw, ty); 
+      ctx.stroke();
+    } else {
+      ctx.drawImage(img, sx, sy, sw, sh, tx, ty, tw, th);
+    }
     numDraws+=1;
   }
 
