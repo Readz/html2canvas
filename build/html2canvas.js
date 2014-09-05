@@ -2977,8 +2977,8 @@ _html2canvas.Renderer.Canvas = function(options) {
     scaleY = 1,
     zStack = parsedData.stack;
 
-    canvas.width = canvas.style.width =  options.width || zStack.ctx.width;
-    canvas.height = canvas.style.height = options.height || zStack.ctx.height;
+    canvas.width = canvas.style.width =  zStack.ctx.width || canvas.width;
+    canvas.height = canvas.style.height = zStack.ctx.height || options.height ;
 
     fstyle = ctx.fillStyle;
     if (options.scale) {
@@ -3027,12 +3027,17 @@ _html2canvas.Renderer.Canvas = function(options) {
         // crop image to the bounds of selected (single) element
         bounds = _html2canvas.Util.Bounds(options.elements[0]);
         newCanvas = document.createElement('canvas');
-        newCanvas.width = Math.ceil(bounds.width*scaleX);
-        newCanvas.height = Math.ceil(bounds.height*scaleY);
+        newCanvas.width = options.width || Math.ceil(bounds.width*scaleX);
+        newCanvas.height = options.height || Math.ceil(bounds.height*scaleY);
         ctx = newCanvas.getContext("2d");
 
         var imgData = canvas.getContext("2d").getImageData(bounds.left*scaleX, bounds.top*scaleY, bounds.width*scaleX, bounds.height*scaleY);
-        ctx.putImageData(imgData, 0, 0);
+        ctx.putImageData(imgData, 0, 0, 0, 0, bounds.width*scaleX, bounds.height*scaleY);
+        /* 
+         * Alternative -- be sure to comment out 'ctx.scale(scaleX, scaleY)'.
+         *
+        ctx.drawImage(canvas, bounds.left, bounds.top, bounds.width, bounds.height, 0, 0, bounds.width*scaleX, bounds.height*scaleY);
+         */
 
         canvas = null;
         return newCanvas;
