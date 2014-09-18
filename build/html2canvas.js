@@ -2879,10 +2879,14 @@ window.html2canvas = function(elements, opts) {
     });
   };
 
-  // for pages without images, we still want this to be async, i.e. return methods before executing
-  window.setTimeout( function(){
+  if(options.async) {
+    // for pages without images, we still want this to be async, i.e. return methods before executing
+    window.setTimeout( function(){
+      _html2canvas.Preload( options );
+    }, 0 );
+  } else {
     _html2canvas.Preload( options );
-  }, 0 );
+  }
 
   return {
     render: function( queue, opts ) {
