@@ -1096,9 +1096,11 @@ _html2canvas.Parse = function (images, options, cb) {
       for (var i = 0, j = sheets.length; i < j; i++) {
         try {
           var rules = sheets[i].cssRules;
-          for (var k = 0, l = rules.length; k < l; k++) {
-            if(findPsuedoEls.test(rules[k].selectorText)) {
-              classes.push(rules[k].selectorText);
+          if(rules) {
+            for (var k = 0, l = rules.length; k < l; k++) {
+              if(findPsuedoEls.test(rules[k].selectorText)) {
+                classes.push(rules[k].selectorText);
+              }
             }
           }
         }
