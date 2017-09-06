@@ -1,6 +1,6 @@
 /*
   html2canvas 0.4.1 <http://html2canvas.hertzen.com>
-  Copyright (c) 2014 Niklas von Hertzen
+  Copyright (c) 2017 Niklas von Hertzen
 
   Released under MIT License
 */
@@ -1967,7 +1967,7 @@ _html2canvas.Parse = function (images, options, cb) {
   }
 
   function drawImage(ctx, img, sx, sy, sw, sh, tx, ty, tw, th) {
-    if(img.src.endsWith('/imgplchldr/')) {
+    if(img.src.endsWith('/imgplchldr')) {
       // drawing an svg into the canvas 'taints' it and will throw a scurity exception when we try to read the result image later
       // so we draw the x here instead of drawing the svg
       ctx.beginPath();
@@ -2065,16 +2065,9 @@ _html2canvas.Parse = function (images, options, cb) {
   }
 
   function renderBackgroundRepeating(el, bounds, ctx, image, imageIndex) {
-    var backgroundSize, backgroundPosition, backgroundRepeat;
-    if(image.src.endsWith('/imgplchldr/')) {
-        backgroundSize = {width: bounds.width, height: bounds.height};
-        backgroundPosition = {left: 0, top: 0};
-        backgroundRepeat = 'no-repeat';
-    } else {
-        backgroundSize = Util.BackgroundSize(el, bounds, image, imageIndex),
-        backgroundPosition = Util.BackgroundPosition(el, bounds, image, imageIndex, backgroundSize),
-        backgroundRepeat = Util.BackgroundRepeat(el, imageIndex);
-    }
+    var backgroundSize = Util.BackgroundSize(el, bounds, image, imageIndex),
+    backgroundPosition = Util.BackgroundPosition(el, bounds, image, imageIndex, backgroundSize),
+    backgroundRepeat = Util.BackgroundRepeat(el, imageIndex);
 
     image = resizeImage(image, backgroundSize);
 
