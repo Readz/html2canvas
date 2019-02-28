@@ -934,7 +934,7 @@ _html2canvas.Parse = function (images, options, cb) {
   }
 
   function drawImage(ctx, img, sx, sy, sw, sh, tx, ty, tw, th) {
-    if(img.src.endsWith('/imgplchldr')) {
+    if(img.src && img.src.endsWith('/imgplchldr')) {
       // drawing an svg into the canvas 'taints' it and will throw a scurity exception when we try to read the result image later
       // so we draw the x here instead of drawing the svg
       ctx.beginPath();
