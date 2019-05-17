@@ -1061,7 +1061,7 @@ _html2canvas.Parse = function (images, options, cb) {
       stack = renderElement(element, null, false, transparentBackground);
 
     // create pseudo elements in a single pass to prevent synchronous layouts
-    addPseudoElements(element);
+    //addPseudoElements(element);
 
     parseChildren(element, stack, function() {
       if (transparentBackground) {
@@ -2332,6 +2332,7 @@ _html2canvas.Parse = function (images, options, cb) {
     }
   }
 };
+
 _html2canvas.Preload = function( options ) {
 
   var images = {

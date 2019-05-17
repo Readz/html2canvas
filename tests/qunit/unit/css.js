@@ -144,7 +144,7 @@ $(function() {
             
         });
     });
-
+/*
     test('text-shadow', function() {
 
       $('#textShadows div').each(function(i, el) {
@@ -173,7 +173,7 @@ $(function() {
         }
       });
     });
-    
+*/
     test('background-image', function () {
         
         test_parse_background_image(
